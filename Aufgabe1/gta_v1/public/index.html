@@ -28,24 +28,25 @@
 				<!-- ############### Aufgabe1a Form1 Start -->
 				<fieldset>
 					<legend>Enter new GeoTag</legend>
-				<br><br>
-				<form id="tag-form" action="/tagging" method="post"></form>
-				<label for="latitude">latitude</label>
-				<br>
-				<input type="text" id="latitude" name="latitude" placeholder="latitude">
-				<br><br>
-				<label for="lngitude">lngitude</label>
-				<br>
-				<input type="text" id="lngitude" name="lngitude" placeholder="lngitude">
-				<br><br>
-				<label for="name">name</label>
-				<br>
-				<input type="text" id="name" name="name" placeholder="name"> 
-				<br><br>
-				<label for="fname">hastag</label>
-				<br>
-				<input type="text" id="hastag" name="hastag" placeholder="hastag mit maximal 10">
-				<br><br>
+						<br><br>
+						<form id="tag-form" action="/tagging" method="post"></form>
+						<label for="latitude">latitude</label>
+						<br>
+						<input type="text" id="latitude" name="latitude" placeholder="latitude" required>
+						<br><br>
+						<label for="lngitude">lngitude</label>
+						<br>
+						<input type="text" id="lngitude" name="lngitude" placeholder="lngitude">
+						<br><br>
+						<label for="name">name</label>
+						<br>
+						<input type="text" id="name" name="name" placeholder="name"> 
+						<br><br>
+						<label for="fname">hastag</label>
+						<br>
+						<input type="text" id="hastag" name="hastag" placeholder="# +max 10 letters">
+						<br><br>
+						<button type="aply">submit</button> 
 				</fieldset>
 
 				<!-- ############### Aufgabe1a Form1 Ende -->
@@ -57,6 +58,12 @@
 
 				<!-- ############### Aufgabe1a Form2 Start -->
 				<form id="filter-form" action="/discovery" method="post"></form>
+
+				<fieldset>
+					<legend>Filter by Searchterm</legend>
+						<input type="text" id="hastag" name="hastag" placeholder="search term">
+						<button type="aply">submit</button> 
+				</fieldset>
 				<!-- ############### Aufgabe1a Form2 Ende -->
 
 				<div class="taglist">

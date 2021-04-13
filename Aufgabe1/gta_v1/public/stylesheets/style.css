@@ -1,8 +1,57 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+main {
+    display: flex;
+}
+
+input {
+    display: block;
+    margin: 3%;
+    flex-grow: 1;
+}
+
+header {
+    background-color: lightcoral;
+}
+
+footer {
+    background-color: grey;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+section.tagging {
+    flex-grow: 1;
+}
+
+section.discovery {
+    flex-grow: 1;
+}
+
+.tags {
+    display: flex;
+}
+
+.tagmap {
+    flex-grow: 3;
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+}
+
+ul li:nth-child(1n) {
+    background-color: cornflowerblue;
+    margin: 3px;
 }

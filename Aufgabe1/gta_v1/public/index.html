@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoTagApp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel='stylesheet' href='./stylesheets/style.css' />
-
 </head>
 
 <body>
@@ -19,59 +19,48 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
+        <section class="tagging">
+            <h2>Tagging</h2>
 
-        <div class="container">
+            <!-- ############### Aufgabe1a Form1 Start -->
+            <form id="tag-form" action="/tagging" method="post">
+                <fieldset>
+                    <legend>New post</legend>
+                    <label for="latitude"><b>Latitude</b></label>
+                    <input type="text" label="latitude" placeholder="69" required>
+                    <label for="longitude"><b>Longitude</b></label>
+                    <input type="text" label="longitude" placeholder="420" required>
+                    <label for="name"><b>Name</b></label>
+                    <input type="text" label="name" placeholder="HSKA" required>
+                    <label for="hashtag"><b>Hashtag</b></label>
+                    <input type="text" label="hashtag" placeholder="#nice" pattern="#.*" maxlength="11">
+                    <input type="submit" value="Submit">
+                </fieldset>
+            </form>
+            <!-- ############### Aufgabe1a Form1 Ende -->
 
-            <section class="tagging">
-                <h2>Tagging</h2>
+        </section>
+        <section class="discovery">
+            <h2>Discovery</h2>
 
-                <!-- ############### Aufgabe1a Form1 Start -->
-                <form id="tag-form" action="/tagging" method="post">
-                    <fieldset>
-                        <legend>New post</legend>
-                        <label for="latitude"><b>Latitude</b></label>
-                        <br>
-                        <input type="text" label="latitude" placeholder="69" required>
-                        <br></br>
-                        <label for="longitude"><b>Longitude</b></label>
-                        <br>
-                        <input type="text" label="longitude" placeholder="420" required>
-                        <br></br>
-                        <label for="name"><b>Name</b></label>
-                        <br>
-                        <input type="text" label="name" placeholder="HSKA" required>
-                        <br></br>
-                        <label for="hashtag"><b>Hashtag</b></label>
-                        <br>
-                        <input type="text" label="hashtag" placeholder="#nice" pattern="#.*" maxlength="11">
-                        <br></br>
-                        <input type="submit" value="Submit">
-                    </fieldset>
-                </form>
-                <!-- ############### Aufgabe1a Form1 Ende -->
-
-            </section>
-
-            <section class="discovery">
-                <h2>Discovery</h2>
-
-                <!-- ############### Aufgabe1a Form1 Start -->
-                <form id="tag-form" action="/discovery" method="post">
-                    <fieldset>
-                        <legend>Filter by Searchterm</legend>
-                        <input type="text" label="searchterm" placeholder="hska" required>
-                        <input type="hidden" id="latitude" name="latitude">
-                        <input type="hidden" id="longitude" name="longitude">
-                        <input type="submit" value="apply">
-                    </fieldset>
-                </form>
-                <!-- ############### Aufgabe1a Form1 Ende -->
+            <!-- ############### Aufgabe1a Form1 Start -->
+            <form id="discovery-form" action="/discovery" method="post">
+                <fieldset>
+                    <legend>Filter by Searchterm</legend>
+                    <input type="text" label="searchterm" placeholder="hska" required>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="submit" value="apply">
+                </fieldset>
+            </form>
+            <!-- ############### Aufgabe1a Form1 Ende -->
 
 
-                <!-- ############### Aufgabe1a Form2 Start -->
-                <form id="filter-form" action="/discovery" method="post"></form>
-                <!-- ############### Aufgabe1a Form2 Ende -->
+            <!-- ############### Aufgabe1a Form2 Start -->
+            <form id="filter-form" action="/discovery" method="post"></form>
+            <!-- ############### Aufgabe1a Form2 Ende -->
+            <div class="container2">
 
                 <div class="taglist">
                     <ul id="results">
@@ -85,9 +74,10 @@
                     <div class="caption">Result map</div>
                 </div>
 
-            </section>
-        </div>
+            </div>
 
+
+        </section>
 
 
     </main>

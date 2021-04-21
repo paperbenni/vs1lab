@@ -1,57 +1,77 @@
-body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-    color: #00B7FF;
-}
-
-main {
-    display: flex;
-}
-
-input {
-    display: block;
-    margin: 3%;
-    flex-grow: 1;
-}
-
-header {
-    background-color: lightcoral;
-}
-
-footer {
-    background-color: grey;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-section.tagging {
-    flex-grow: 1;
-}
-
-section.discovery {
-    flex-grow: 1;
-}
-
-.tags {
-    display: flex;
-}
-
-.tagmap {
-    flex-grow: 3;
-}
-
-#results {
-    display: flex;
-    flex-direction: column;
-}
-
-ul li:nth-child(1n) {
-    background-color: cornflowerblue;
-    margin: 3px;
-}
+        @media screen and (max-width: 800px) {
+            main {
+                flex-direction: column;
+            }
+        }
+        
+        @media screen and (max-width: 1000px) {
+            .tags {
+                flex-direction: column;
+            }
+        }
+        
+        body {
+            padding: 50px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+        }
+        
+        a {
+            color: #00B7FF;
+        }
+        
+        main {
+            display: flex;
+        }
+        
+        input {
+            display: block;
+            margin: 3px;
+            flex-grow: 1;
+        }
+        
+        header {
+            background-color: lightcoral;
+        }
+        
+        footer {
+            background-color: grey;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        section.tagging {
+            flex-grow: 1;
+        }
+        
+        section.discovery {
+            flex-grow: 1;
+        }
+        
+        .tags {
+            display: flex;
+        }
+        
+        .tagmap {
+            width: 100%;
+        }
+        
+        .taglist {
+            width: 100%;
+        }
+        
+        #results {
+            padding: 0px;
+        }
+        
+        ul li {
+            background-color: cornflowerblue;
+            font-weight: bold;
+            color: white;
+            list-style-type: none;
+            margin: 3px;
+            padding: 6px;
+            margin-bottom: 3px;
+        }

@@ -3,6 +3,62 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+
 a {
   color: #00B7FF;
 }
+
+header{
+  background-color: darkslategrey;
+  }
+footer {
+  background-color: darkslategrey;
+  }
+
+section.widget{
+  display: flex;
+  flex-direction: column;
+  }
+
+input{
+display: block;
+margin: 3%;
+flex-grow: 1;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+section.discovery {
+  flex-grow: 1;
+}
+    
+section.tagging{ 
+  flex-grow: 1;
+}
+
+section.tags{ 
+    flex-grow: 1;
+}
+
+ul li:nth-child(1n) { 
+background-color: deepskyblue;
+margin-top: 5px;
+}
+
+@media all and (max-width: 1920px){
+section.discovery{
+order:1
+}
+
+section.tagging{
+  order:2
+  }
+section.tags{
+  order:3
+  }
+  footer{
+ order:4
+ }

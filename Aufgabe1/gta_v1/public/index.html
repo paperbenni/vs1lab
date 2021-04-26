@@ -2,89 +2,89 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>GeoTagApp</title>
-	<link rel='stylesheet' href='./stylesheets/style.css' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoTagApp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel='stylesheet' href='./stylesheets/style.css' />
 </head>
 
 <body>
 
-	<header>
-		<img src="./images/location.png" width="100" alt="an image of a map and location">
-		<h1>GeoTagApp</h1>
-		<nav>
-			<a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
-		</nav>
-	</header>
+    <header>
+        <img src="./images/location.png" width="100" alt="an image of a map and location">
+        <h1>GeoTagApp</h1>
+        <nav>
+            <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
+        </nav>
+    </header>
 
-	<main class="flexbox-container">
+    <main class="container">
+        <section class="tagging">
+            <h2>Tagging</h2>
 
-		<section class="flexbox-item tagging">
-			<h2>Tagging</h2>
-			<form id="tag-form" action="/tagging" method="post"></form>
-			<fieldset>
-				<legend><label>Enter new GeoTag</label></legend>
-				<form action="/action_page.php">
-					<label for="latitude">latitude</label><br>
-					<input type="text" id="latitude" name="latitude" placeholder="latitude" required><br><br>
-					<label for="lname">longitude</label><br>
-					<input type="text" id="longitude" name="longitude" placeholder="longitude" required><br><br>
-					<label for="name">name</label><br>
-					<input pattern="[A-Za-z]{1,10}" type="text" id="name" name="name" placeholder="some name"
-						required><br><br>
-					<label for="hashtag">hashtag</label><br>
-					<input pattern="#\w+" maxlength="11" oninvalid="setCustomValidity('# and max. 10 Letters.')" type="text"
-						id="hashtag" name="hashtag" placeholder="# + max. 10 letters"><br><br>
-					<input type="submit" value="Submit">
-				</form>
-			</fieldset>
+            <!-- ############### Aufgabe1a Form1 Start -->
+            <form id="tag-form" action="/tagging" method="post">
+                <fieldset>
+                    <legend>New post</legend>
+                    <label for="latitude"><b>Latitude</b></label>
+                    <input id="latitude" type="number" label="latitude" placeholder="69" required>
+                    <label for="longitude"><b>Longitude</b></label>
+                    <input id="longitude" type="number" label="longitude" placeholder="420" required>
+                    <label for="name"><b>Name</b></label>
+                    <input id="name" type="text" label="name" placeholder="HSKA" required>
+                    <label for="hashtag"><b>Hashtag</b></label>
+                    <input id="hashtag" type="text" label="hashtag" placeholder="#nice" pattern="#.*" maxlength="11">
+                    <input type="submit" value="Submit">
+                </fieldset>
+            </form>
+            <!-- ############### Aufgabe1a Form1 Ende -->
 
-		</section>
-		</p>
+        </section>
+        <section class="discovery">
+            <h2>Discovery</h2>
 
-		<section class="flexbox-item discovery">
-			
-			<h2>Discovery</h2>
-			<form id="discovery-form" action="/discovery" method="post"></form>
-            <fieldset>
-				<legend><label>Filter by Searchterm</label></legend>
-				<form action="/action page.php">
-				<input pattern="\w+" maxlength="10" oninvalid="setCustomValidity('max. 10 Letters.')" type="text" id="searchTerm" name="searchTerm" placeholder="search term" required>
-				<input type="submit" value="apply">
-			</form>
-			</fieldset>
-	    
-			<!-- ############### Aufgabe1a Form2 Start -->
-			<form id="filter-form" action="/discovery" method="post"></form>
-		
-		
-			<!-- ############### Aufgabe1a Form2 Ende -->
-          <div class="test">
-			<div class="flexbox-item taglist">
-				<ul  id=" results">
-					
-					<li> Castle (49.01379, 8.404435) #sight</li>
-				
-					<li>IWI (49.01379, 8.390071) #edu</li>
-				</ul>
-			</div>
+            <!-- ############### Aufgabe1a Form1 Start -->
+            <form id="discovery-form" action="/discovery" method="post">
+                <fieldset>
+                    <legend>Filter by Searchterm</legend>
+                    <input type="text" label="searchterm" placeholder="hska" required>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="submit" value="apply">
+                </fieldset>
+            </form>
+            <!-- ############### Aufgabe1a Form1 Ende -->
 
-			<div class="flexbox-item tagmap">
-				<img id="result-img" src="./images/mapview.jpg" alt="a map with locations" />
-				<div class="caption">Result map</div>
-			</div>
-		</div>
-		</section>
-	
 
-		
+            <!-- ############### Aufgabe1a Form2 Start -->
+            <form id="filter-form" action="/discovery" method="post"></form>
+            <!-- ############### Aufgabe1a Form2 Ende -->
+            <div class="container2">
 
-	</main>
+                <div class="taglist">
+                    <ul id="results">
+                        <li>Castle (49.01379, 8.404435) #sight</li>
+                        <li>IWI (49.01379, 8.390071) #edu</li>
+                    </ul>
+                </div>
 
-	<footer>
-		<span>2017 by LKIT</span>
-	</footer>
+                <div class="tagmap">
+                    <img id="result-img" src="./images/mapview.jpg" alt="a map with locations" />
+                    <div class="caption">Result map</div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+    <footer>
+        <span>2017 by LKIT</span>
+    </footer>
 
 </body>
 

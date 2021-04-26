@@ -1,73 +1,84 @@
 
 
-body{
-  padding: 50px;
-  font: 14px "Lucida Grand", Helvetica, Arial, sans-serif;
+body {
+  max-width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
 a {
-  color:#00B7FF;
+  color: #00B7FF;
 }
 
-.flexbox-container {
-  display: flex;
-  flex-flow: row wrap;
-  
+input {
+    display: block;
+    margin: 10px;
 }
 
-.tagging { 
-  flex-grow: 1;
-  margin-right: 2%;
-  order: 1; 
-  
+.container, .container2 {
+    display: flex;
 }
+
 .discovery {
-  flex-grow: 4;
-  order: 2;
-  margin-bottom: 1%; 
-  
-}
-.test{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  
-}
-.taglist {
-  margin-bottom: 1%;
-  order : 1;
-  
-}
-.tagmap {
-  margin-top: 1%;
-  order:2;
-  
+    display: flex;
+    flex-direction: column;
 }
 
-header {
-  background-color: lightgray;
-  padding: 20px;
+@media only screen and (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
 }
-footer {
-  background-color: lightgray;
-  padding :20px;
+
+@media only screen and (max-width: 800px) {
+    .container2 {
+        flex-direction: column;
+    }
 }
-@media all and (min-width: 2000px){
-  .tagging {
-    flex: 1;
-  }
-  .discovery {
-    order:1;
-  }
-  .taglist {
-    order:2;
-  }
-  .tagmap {
-    order:2;
-  }
-  
-  .footer {
-    order:3;
-  }
-  
-  
+
+.container > section {
+    margin: 10px;
+    flex-grow: 1;
+}
+
+header, footer {
+    border-style: solid;
+    border-color: #54b8d4;
+    padding: 20px;
+    border-radius: 6px;
+    border-width: 1px;
+}
+
+ul > li {
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+
+ul > li:hover {
+    background-color: #54b8d4;
+    border-style: solid;
+    border-width: 2px;
+    padding: 8px;
+    border-color: #3298C8;
+    
+}
+
+.taglist {
+    display: flex;
+    flex-grow: 1;
+    padding-left: 0;
+}
+
+.tagmap {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+#results {
+    padding: 0;
 }

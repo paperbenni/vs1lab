@@ -9,7 +9,7 @@ a {
   color: #00B7FF;
 }
 
-input {
+.container > input {
     display: block;
     margin: 10px;
 }

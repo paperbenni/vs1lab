@@ -22,19 +22,18 @@
     <main class="container">
         <section class="tagging">
             <h2>Tagging</h2>
-
             <!-- ############### Aufgabe1a Form1 Start -->
             <form id="tag-form" action="/tagging" method="post">
                 <fieldset>
                     <legend>New post</legend>
                     <label for="latitude"><b>Latitude</b></label>
-                    <input type="text" label="latitude" placeholder="69" required>
+                    <input type="number" id="latitude" placeholder="69" required>
                     <label for="longitude"><b>Longitude</b></label>
-                    <input type="text" label="longitude" placeholder="420" required>
+                    <input type="number" id="longitude" placeholder="420" required>
                     <label for="name"><b>Name</b></label>
-                    <input type="text" label="name" placeholder="HSKA" required>
+                    <input type="text" id="name" maxlength="10" placeholder="HSKA" required>
                     <label for="hashtag"><b>Hashtag</b></label>
-                    <input type="text" label="hashtag" placeholder="#nice" pattern="#.*" maxlength="11">
+                    <input type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>
@@ -48,9 +47,9 @@
             <form id="discovery-form" action="/discovery" method="post">
                 <fieldset>
                     <legend>Filter by Searchterm</legend>
-                    <input type="text" label="searchterm" placeholder="hska" required>
-                    <input type="hidden" id="latitude" name="latitude">
-                    <input type="hidden" id="longitude" name="longitude">
+                    <input type="text" id="searchterm" placeholder="hska" required>
+                    <input type="hidden" id="latitude_h" name="latitude">
+                    <input type="hidden" id="longitude_h" name="longitude">
                     <input type="submit" value="apply">
                 </fieldset>
             </form>

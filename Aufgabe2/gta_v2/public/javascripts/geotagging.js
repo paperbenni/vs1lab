@@ -136,6 +136,8 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
         mapurl = getLocationMapSrc(position.coords.latitude, position.coords.longitude, [], 14);
         console.log(mapurl);
         document.getElementById("result-img").src = mapurl;
+      }, function() {
+        alert("failed to get location");
       });
     },
   }; // ... Ende öffentlicher Teil

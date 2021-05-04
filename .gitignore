@@ -297,3 +297,6 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/node,web,linux,macos,windows,webstorm+all,eclipse
+
+.vim/*
+tags

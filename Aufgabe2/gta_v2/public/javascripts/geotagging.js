@@ -82,7 +82,7 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
     };
 
     // Hier API Key eintragen
-    var apiKey = "YOUR_API_KEY_HERE";
+    var apiKey = "UvGuxYMvkd1ywjGkIXlvD742g9grGJRi";
 
     /**
      * Funktion erzeugt eine URL, die auf die Karte verweist.
@@ -96,7 +96,7 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
     var getLocationMapSrc = function(lat, lon, tags, zoom) {
         zoom = typeof zoom !== 'undefined' ? zoom : 10;
 
-        if (apiKey === "YOUR_API_KEY_HERE") {
+        if (apiKey === "UvGuxYMvkd1ywjGkIXlvD742g9grGJRi") {
             console.log("No API key provided.");
             return "images/mapview.jpg";
         }
@@ -119,11 +119,20 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
 
         readme: "Dieses Objekt enthält 'öffentliche' Teile des Moduls.",
 
-        updateLocation: function() {
-            // TODO Hier Inhalt der Funktion "update" ergänzen
-        }
+            updateLocation: function() {
+                tryLocate(function (position) { //gibt die position an
+                    document.getElementById("latitude").value = getLatitude(position); //breite
+                    document.getElementById("longitude").value = getLongitude(position); //laenge
+                    mapurl = getLocationMapSrc(getLatitude(position), getLongitude(position), [], 14); //mapurl= position(breite+laenge)
+                    
+                    console.log(mapurl); //konsolenoutput der mapurl
+                    document.getElementById("result-img").src = mapurl;
+                  }, function() {
+                    alert("failed to get location"); //falls es nicht klappt, error message
+                  });
+                },
+              }; // ... Ende öffentlicher Teil
 
-    }; // ... Ende öffentlicher Teil
 })(GEOLOCATIONAPI);
 
 /**
@@ -132,6 +141,6 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
  * des Skripts.
  */
 $(function() {
-    alert("Please change the script 'geotagging.js'");
-    // TODO Hier den Aufruf für updateLocation einfügen
+   // alert("Please change the script 'geotagging.js'");
+    gtaLocator.updateLocation();
 });

@@ -27,13 +27,13 @@
                 <fieldset>
                     <legend>New post</legend>
                     <label for="latitude"><b>Latitude</b></label>
-                    <input name="latitude" type="number" id="latitude" placeholder="69" step="any" required>
+                    <input class="coordinput" <% if (locals.latitude !== undefined) { %> value="<%= latitude %>" <% } %> name="latitude" type="number" id="latitude" placeholder="69" step="any" required>
                     <label for="longitude"><b>Longitude</b></label>
-                    <input name="longitude" type="number" id="longitude" placeholder="420" step="any" required>
+                    <input class="coordinput" <% if (locals.longitude !== undefined) { %> value="<%= longitude %>" <% } %> name="longitude" type="number" id="longitude" placeholder="69" step="any" required>
                     <label for="name"><b>Name</b></label>
-                    <input name="name" type="text" id="name" maxlength="10" placeholder="HSKA" required>
+                    <input class="coordinput" name="name" type="text" id="name" maxlength="10" placeholder="HSKA" required>
                     <label for="hashtag"><b>Hashtag</b></label>
-                    <input name="hashtag" type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
+                    <input class="coordinput" name="hashtag" type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>
@@ -48,8 +48,8 @@
                 <fieldset>
                     <legend>Filter by Searchterm</legend>
                     <input name="term" type="text" id="searchterm" placeholder="hska" required>
-                    <input name="latitude" type="hidden" id="latitude_h" name="latitude">
-                    <input name="longitude" type="hidden" id="longitude_h" name="longitude">
+                    <input <% if (locals.latitude !== undefined) { %> value="<%= latitude %>" <% } %> name="latitude" type="hidden" id="latitude_h" name="latitude">
+                    <input <% if (locals.longitude !== undefined) { %> value="<%= longitude %>" <% } %> name="longitude" type="hidden" id="longitude_h" name="longitude">
                     <input type="submit" value="apply">
                 </fieldset>
             </form>

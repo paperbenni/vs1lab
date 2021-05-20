@@ -130,17 +130,22 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
     readme: "Dieses Objekt enthält 'öffentliche' Teile des Moduls.",
 
     updateLocation: function () {
-      tryLocate(function (position) {
-        document.getElementById("latitude").value = position.coords.latitude;
-        document.getElementById("longitude").value = position.coords.longitude;
-        document.getElementById("latitude_h").value = position.coords.latitude;
-        document.getElementById("longitude_h").value = position.coords.longitude;
-        mapurl = getLocationMapSrc(position.coords.latitude, position.coords.longitude, [], 14);
-        console.log(mapurl);
-        document.getElementById("result-img").src = mapurl;
-      }, function(error) {
-        alert("failed to get location\n" + error);
-      });
+      if (!([].slice.call(document.getElementsByClassName("coordinput")).some((element) => element.value))) {
+        tryLocate(function (position) {
+          console.log("updating location");
+          document.getElementById("latitude").value = position.coords.latitude;
+          document.getElementById("longitude").value = position.coords.longitude;
+          document.getElementById("latitude_h").value = position.coords.latitude;
+          document.getElementById("longitude_h").value = position.coords.longitude;
+          mapurl = getLocationMapSrc(position.coords.latitude, position.coords.longitude, [], 14);
+          console.log(mapurl);
+          document.getElementById("result-img").src = mapurl;
+        }, function (error) {
+          alert("failed to get location\n" + error);
+        });
+
+      }
+      // }
     },
   }; // ... Ende öffentlicher Teil
 })(GEOLOCATIONAPI);

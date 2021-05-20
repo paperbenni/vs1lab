@@ -27,13 +27,13 @@
                 <fieldset>
                     <legend>New post</legend>
                     <label for="latitude"><b>Latitude</b></label>
-                    <input type="number" id="latitude" placeholder="69" step="any" required>
+                    <input name="latitude" type="number" id="latitude" placeholder="69" step="any" required>
                     <label for="longitude"><b>Longitude</b></label>
-                    <input type="number" id="longitude" placeholder="420" step="any" required>
+                    <input name="longitude" type="number" id="longitude" placeholder="420" step="any" required>
                     <label for="name"><b>Name</b></label>
-                    <input type="text" id="name" maxlength="10" placeholder="HSKA" required>
+                    <input name="name" type="text" id="name" maxlength="10" placeholder="HSKA" required>
                     <label for="hashtag"><b>Hashtag</b></label>
-                    <input type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
+                    <input name="hashtag" type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>
@@ -47,9 +47,9 @@
             <form id="discovery-form" action="/discovery" method="post">
                 <fieldset>
                     <legend>Filter by Searchterm</legend>
-                    <input type="text" id="searchterm" placeholder="hska" required>
-                    <input type="hidden" id="latitude_h" name="latitude">
-                    <input type="hidden" id="longitude_h" name="longitude">
+                    <input name="term" type="text" id="searchterm" placeholder="hska" required>
+                    <input name="latitude" type="hidden" id="latitude_h" name="latitude">
+                    <input name="longitude" type="hidden" id="longitude_h" name="longitude">
                     <input type="submit" value="apply">
                 </fieldset>
             </form>

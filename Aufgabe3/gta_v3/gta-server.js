@@ -19,6 +19,7 @@ var searchradius = 100;
 var app;
 app = express();
 app.use(logger('dev'));
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -68,6 +69,7 @@ var Geotags = (function () {
 
     return {
         addTag: function (tag) {
+            console.log("added tag " + JSON.stringify(tag));
             tags.push(tag);
         },
         removeTag: function (tag) {
@@ -124,7 +126,6 @@ app.get('/', function (req, res) {
  */
 
 app.post('/tagging', function (req, res) {
-    console.log(req.body);
     var b = req.body;
     newtag = new Geotag(b.latitude, b.longitude, b.name, b.hashtag);
     Geotags.addTag(newtag);
@@ -146,10 +147,10 @@ app.post('/tagging', function (req, res) {
  */
 
 
-app.get('/discovery', function (req, res) {
+app.post('/discovery', function (req, res) {
     var b = req.body;
     var taglist = []
-    if (b.hasOwnProperty('searchterm')) {
+    if ('term' in b) {
         taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.searchterm);
     } else {
         taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius);

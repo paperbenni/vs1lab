@@ -14,7 +14,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var express = require('express');
 
-var searchradius = 100;
+var searchradius = 100000;
 
 var app;
 app = express();
@@ -130,7 +130,7 @@ app.post('/tagging', function (req, res) {
     newtag = new Geotag(b.latitude, b.longitude, b.name, b.hashtag);
     Geotags.addTag(newtag);
     res.render('gta', {
-        taglist: Geotags.searchTags(b.latitude, b.longitude, searchradius)
+        taglist: Geotags.getAllTags()
     })
 });
 

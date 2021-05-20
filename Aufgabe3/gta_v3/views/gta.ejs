@@ -72,7 +72,10 @@
                 </div>
 
                 <div class="tagmap">
-                    <img id="result-img" src="/public/images/mapview.jpg" alt="a map with locations" />
+                    <img <% if (taglist !==undefined) { %> 
+                    data-tags="<%= JSON.stringify(taglist) %>"
+                    <% } %> 
+                    id="result-img" src="/public/images/mapview.jpg" alt="a map with locations" />
                     <div class="caption">Result map</div>
                 </div>
 

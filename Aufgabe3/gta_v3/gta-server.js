@@ -30,14 +30,19 @@ app.set('view engine', 'ejs');
  */
 
 // TODO: CODE ERGÄNZEN
-
+app.use(express.static('public'));
 /**
  * Konstruktor für GeoTag Objekte.
  * GeoTag Objekte sollen min. alle Felder des 'tag-form' Formulars aufnehmen.
  */
 
 // TODO: CODE ERGÄNZEN
-
+function GeoTag(latitude, longitude, name, hashtag) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.name = name;
+    this.hashtag = hashtag;
+}
 /**
  * Modul für 'In-Memory'-Speicherung von GeoTags mit folgenden Komponenten:
  * - Array als Speicher für Geo Tags.
@@ -48,6 +53,51 @@ app.set('view engine', 'ejs');
  */
 
 // TODO: CODE ERGÄNZEN
+var GeoTags = (function() {
+    /*Privt*/
+    var Memory = [];
+    /*Öffentlich*/
+    return {
+        search: function(position, searchText) {
+            SearchTags = [];
+            if (searchText == null) {
+                SearchTags = Memory;
+
+            } else {
+                for (let index = 0; index < Memory.length; index++) {
+                    const element = Memory[index];
+                    if (element.name.includes(searchText)) {
+                        SearchTags.push(element)
+                    }
+                }
+            }
+
+            for (let index = 0; index < SearchTags.length; index++) {
+                const element = SearchTags[index];
+                var a = element.latitude - position.latitude;
+                var b = element.longitude - position.latitude;
+
+                var distance = Math.sqrt(a * a + b * b);
+                if (distance > 10) {
+                    Memory.splice(Memory.indexOf(element), 1)
+                }
+
+            }
+            return SearchTags;
+        },
+
+        add: function(GeoTag) {
+
+            Memory.push(GeoTag);
+
+        },
+        delete: function(GeoTag) {
+            Memory.splice(Memory.indexOf(GeoTag), 1)
+
+        }
+    }
+
+})();
 
 /**
  * Route mit Pfad '/' für HTTP 'GET' Requests.
@@ -62,6 +112,27 @@ app.get('/', function(req, res) {
     res.render('gta', {
         taglist: []
     });
+
+});
+app.post('/discovery', function(req, res) {
+    res.render('gta', {
+        taglist: GeoTags.search({ latitude: req.body.latitude, longitude: req.body.longitude }, req.body.name),
+        latitude: b.latitude,
+        longitude: b.longitude
+    });
+
+});
+app.post('/tagging', function(req, res) {
+
+    var b = req.body;
+    var tag = new GeoTag(b.latitude, b.longitude, b.name, b.hashtag);
+    GeoTags.add(tag)
+    res.render('gta', {
+        taglist: GeoTags.search({ latitude: b.latitude, longitude: b.longitude }),
+        latitude: b.latitude,
+        longitude: b.longitude
+    });
+
 });
 
 /**

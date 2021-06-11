@@ -27,18 +27,14 @@
                 <fieldset>
                     <legend>New post</legend>
                     <label for="latitude"><b>Latitude</b></label>
-                    <input type="number" id="latitude" <% if(locals.latitude!=undefined) {%> value =
-                    <%= latitude %>
-                        <% } %> placeholder="69" step="any" required>
-                            <label for="longitude"><b>Longitude</b></label>
-                            <input type="number" id="longitude" <% if(locals.longitude!=undefined) {%> value =
-                            <%= longitude %>
-                                <% } %> placeholder="420" step="any" required>
-                                    <label for="name"><b>Name</b></label>
-                                    <input type="text" id="name" maxlength="10" placeholder="HSKA" required>
-                                    <label for="hashtag"><b>Hashtag</b></label>
-                                    <input type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
-                                    <input type="submit" value="Submit">
+                    <input type="number" id="latitude" placeholder="69" step="any" required>
+                    <label for="longitude"><b>Longitude</b></label>
+                    <input type="number" id="longitude" placeholder="420" step="any" required>
+                    <label for="name"><b>Name</b></label>
+                    <input type="text" id="name" maxlength="10" placeholder="HSKA" required>
+                    <label for="hashtag"><b>Hashtag</b></label>
+                    <input type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
+                    <input type="submit" value="Submit">
                 </fieldset>
             </form>
             <!-- ############### Aufgabe1a Form1 Ende -->
@@ -67,23 +63,14 @@
 
                 <div class="taglist">
                     <ul id="results">
-                        <% if (taglist !==undefined) taglist.forEach(function(gtag) { %>
-                            <li>
-                                <%= gtag.name %> (
-                                    <%= gtag.latitude %>,
-                                        <%= gtag.longitude %>)
-                                            <%= gtag.hashtag %>
-                            </li>
-                            <% }); %>
+                        <li>Castle (49.01379, 8.404435) #sight</li>
+                        <li>IWI (49.01379, 8.390071) #edu</li>
                     </ul>
                 </div>
 
                 <div class="tagmap">
-
-                    <img <% f(locals.taglist!=undefined) { %> data-tags=
-                    <%= JSON.stringiy(taglist) %>
-                        <% } %> id="result-img" src="./images/mapview.jpg" alt="a map with locations" />
-                            <div class="caption">Result map</div>
+                    <img id="result-img" src="./images/mapview.jpg" alt="a map with locations" />
+                    <div class="caption">Result map</div>
                 </div>
 
             </div>

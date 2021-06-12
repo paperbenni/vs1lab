@@ -21,8 +21,9 @@ app = express();
 app.use(logger('dev'));
 
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
+app.use(bodyParser.json());
 
 // Setze ejs als View Engine
 app.set('view engine', 'ejs');
@@ -56,6 +57,7 @@ function Geotag(latitude, longitude, tagname, hashtag) {
  */
 
 var Geotags = (function () {
+    // private
     var tags = [];
     function getTags(searchstring) {
         matchlist = [];
@@ -67,6 +69,7 @@ var Geotags = (function () {
         return matchlist;
     }
 
+    // public
     return {
         addTag: function (tag) {
             console.log("added tag " + JSON.stringify(tag));
@@ -112,6 +115,12 @@ app.get('/', function (req, res) {
     });
 });
 
+app.post('/rest/tagging', function (req, res) {
+    console.log(req.body);
+    Geotags.addTag(req.body);
+    res.json({'message': "successfully added"});
+});
+
 /**
  * Route mit Pfad '/tagging' für HTTP 'POST' Requests.
  * (http://expressjs.com/de/4x/api.html#app.post.method)
@@ -131,7 +140,7 @@ app.post('/tagging', function (req, res) {
     Geotags.addTag(newtag);
     res.render('gta', {
         // taglist: Geotags.getAllTags()
-        taglist: Geotags.searchTags(b.latitude, b.longitude, searchradius), 
+        taglist: Geotags.searchTags(b.latitude, b.longitude, searchradius),
         latitude: b.latitude,
         longitude: b.longitude
     })

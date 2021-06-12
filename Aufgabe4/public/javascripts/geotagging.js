@@ -29,6 +29,35 @@ GEOLOCATIONAPI = {
   },
 };
 
+
+// constructor identical to server
+function Geotag(latitude, longitude, tagname, hashtag) {
+  this.latitude = latitude;
+  this.longitude = longitude;
+  this.name = tagname;
+  this.hashtag = hashtag;
+}
+
+function submitnewtag() {
+  console.log("sending ajax request");
+  newtag = new Geotag(
+    parseInt(document.getElementById("latitude").value),
+    parseInt(document.getElementById("longitude").value),
+    document.getElementById("name").value,
+    document.getElementById("hashtag").value
+  );
+  console.log(newtag);
+
+  var tagrequest = new XMLHttpRequest();
+  tagrequest.onreadystatechange = function () {
+    console.log("request ready");
+  }
+  tagrequest.open("POST", "rest/tagging", true);
+  tagrequest.setRequestHeader("Content-Type", "application/json");
+  tagrequest.send(JSON.stringify(newtag));
+
+}
+
 // Die echte API ist diese.
 // Falls es damit Probleme gibt, kommentieren Sie die Zeile aus.
 GEOLOCATIONAPI = navigator.geolocation;

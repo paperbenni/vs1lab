@@ -7,6 +7,7 @@
  * Das Konsolenfenster muss im Browser explizit geöffnet werden.
  */
 console.log("The script is going to start...");
+var taglist = [];
 
 // Es folgen einige Deklarationen, die aber noch nicht ausgeführt werden ...
 
@@ -38,6 +39,25 @@ function Geotag(latitude, longitude, tagname, hashtag) {
   this.hashtag = hashtag;
 }
 
+function createDemotag() {
+  return new Geotag(Math.random(), Math.random(), Math.random().toString(36).substring(7), Math.random().toString(36).substring(7));
+}
+
+function renderTags() {
+  var ul = document.getElementById("results");
+  ul.innerHTML = "";
+  taglist.forEach(function (tag) {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(tag.name + " " + "(" + tag.latitude + "," + tag.longitude + ") " + tag.hashtag));
+    ul.appendChild(li);
+  })
+}
+
+function addTag(tag) {
+  taglist.push(tag);
+  renderTags();
+}
+
 function submitnewtag() {
   console.log("sending ajax request");
   newtag = new Geotag(
@@ -50,7 +70,12 @@ function submitnewtag() {
 
   var tagrequest = new XMLHttpRequest();
   tagrequest.onreadystatechange = function () {
-    console.log("request ready");
+    if (xhr.readystate === 4) {
+      addTag(newtag);
+    } else {
+      console.log("something went wrong. we have a team of highly trained apes working on the error");
+      return;
+    }
   }
   tagrequest.open("POST", "rest/tagging", true);
   tagrequest.setRequestHeader("Content-Type", "application/json");

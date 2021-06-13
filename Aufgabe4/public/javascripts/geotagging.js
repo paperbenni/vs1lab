@@ -78,31 +78,32 @@ function submitnewtag() {
       return;
     }
   }
-  tagrequest.open("POST", "rest/tagging", true);
+  tagrequest.open("POST", "geotags", true);
   tagrequest.setRequestHeader("Content-Type", "application/json");
   tagrequest.send(JSON.stringify(newtag));
 
 }
 
-// TODO: redo this with new rest api
 function queryTags() {
   var searchterm = document.getElementById("searchterm").value;
   var searchrequest = new XMLHttpRequest();
   searchrequest.onreadystatechange = function () {
     if (searchrequest.readystate === 4) {
-      console.log("successssss");
-      console.log(searchrequest.responseText);
+      taglist = JSON.parse(searchrequest.responseText);
+      renderTags();
     } else {
+      alert("error");
       return;
     }
   }
 
   if (searchterm) {
-    searchrequest.open("GET", "rest/discovery?searchterm=" + searchterm, true);
+    searchrequest.open("GET", "geotags?search=" + searchterm +
+      "&latitude=" + document.getElementById("latitude").value +
+      "&longitude=" + document.getElementById("longitude").value, true);
   } else {
-    searchrequest.open("GET", "rest/discovery", true);
+    searchrequest.open("GET", "geotags", true);
   }
-
   searchrequest.setRequestHeader("Content-Type", "application/json");
 }
 
@@ -209,14 +210,7 @@ var gtaLocator = (function GtaLocator(geoLocationApi) {
     updateLocation: function () {
       function updateMap(lat, lon) {
         var resultimg = document.getElementById("result-img");
-        var maplist = [];
-        if (resultimg.dataset.tags !== undefined) {
-          maplist = JSON.parse(resultimg.dataset.tags);
-          console.log("hello world" + JSON.stringify(maplist));
-        } else {
-          maplist = [];
-        }
-        mapurl = getLocationMapSrc(lat, lon, maplist, 14);
+        mapurl = getLocationMapSrc(lat, lon, taglist, 14);
         console.log("map url " + mapurl);
         resultimg.src = mapurl;
       }

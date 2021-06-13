@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel='stylesheet' href='/public/stylesheets/style.css' />
 </head>
+
 <body>
+
     <header>
         <img src="/public/images/location.png" width="100" alt="an image of a map and location">
         <h1>GeoTagApp</h1>
@@ -15,6 +18,7 @@
             <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
         </nav>
     </header>
+
     <main class="container">
         <section class="tagging">
             <h2>Tagging</h2>
@@ -27,16 +31,18 @@
                     <label for="longitude"><b>Longitude</b></label>
                     <input class="coordinput" <% if (locals.longitude !== undefined) { %> value="<%= longitude %>" <% } %> name="longitude" type="number" id="longitude" placeholder="69" step="any" required>
                     <label for="name"><b>Name</b></label>
-                    <input class="coordinput" name="name" type="text" id="name" maxlength="10" placeholder="some name" required>
+                    <input class="coordinput" name="name" type="text" id="name" maxlength="10" placeholder="HSKA" required>
                     <label for="hashtag"><b>Hashtag</b></label>
-                    <input class="coordinput" name="hashtag" type="text" id="hashtag" placeholder="# + max. 10 letters" pattern="#\w+" maxlength="11">
+                    <input class="coordinput" name="hashtag" type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>
             <!-- ############### Aufgabe1a Form1 Ende -->
+
         </section>
         <section class="discovery">
             <h2>Discovery</h2>
+
             <!-- ############### Aufgabe1a Form1 Start -->
             <form id="discovery-form" action="/discovery" method="post">
                 <fieldset>
@@ -48,10 +54,13 @@
                 </fieldset>
             </form>
             <!-- ############### Aufgabe1a Form1 Ende -->
+
+
             <!-- ############### Aufgabe1a Form2 Start -->
             <form id="filter-form" action="/discovery" method="post"></form>
             <!-- ############### Aufgabe1a Form2 Ende -->
             <div class="container2">
+
                 <div class="taglist">
                     <ul id="results">
                         <% if (taglist !==undefined) taglist.forEach(function(gtag) { %>
@@ -61,6 +70,7 @@
                             <% }); %>
                     </ul>
                 </div>
+
                 <div class="tagmap">
                     <img <% if (taglist !==undefined) { %> 
                     data-tags="<%= JSON.stringify(taglist) %>"
@@ -68,12 +78,19 @@
                     id="result-img" src="/public/images/mapview.jpg" alt="a map with locations" />
                     <div class="caption">Result map</div>
                 </div>
+
             </div>
+
+
         </section>
+
+
     </main>
+
     <footer>
         <span>2017 by LKIT</span>
     </footer>
+
     <!-- Load JavaScripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

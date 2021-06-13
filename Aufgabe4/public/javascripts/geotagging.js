@@ -51,7 +51,8 @@ function renderTags() {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(tag.name + " " + "(" + tag.latitude + "," + tag.longitude + ") " + tag.hashtag));
     ul.appendChild(li);
-  })
+  });
+  gtaLocator.updateLocation();
 }
 
 function addTag(tag) {
@@ -62,8 +63,8 @@ function addTag(tag) {
 function submitnewtag() {
   console.log("sending ajax request");
   newtag = new Geotag(
-    parseInt(document.getElementById("latitude").value),
-    parseInt(document.getElementById("longitude").value),
+    parseFloat(document.getElementById("latitude").value),
+    parseFloat(document.getElementById("longitude").value),
     document.getElementById("name").value,
     document.getElementById("hashtag").value
   );

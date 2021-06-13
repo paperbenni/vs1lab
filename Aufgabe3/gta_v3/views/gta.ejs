@@ -27,9 +27,9 @@
                     <label for="longitude"><b>Longitude</b></label>
                     <input class="coordinput" <% if (locals.longitude !== undefined) { %> value="<%= longitude %>" <% } %> name="longitude" type="number" id="longitude" placeholder="69" step="any" required>
                     <label for="name"><b>Name</b></label>
-                    <input class="coordinput" name="name" type="text" id="name" maxlength="10" placeholder="HSKA" required>
+                    <input class="coordinput" name="name" type="text" id="name" maxlength="10" placeholder="some name" required>
                     <label for="hashtag"><b>Hashtag</b></label>
-                    <input class="coordinput" name="hashtag" type="text" id="hashtag" placeholder="#nice" pattern="#\w+" maxlength="11">
+                    <input class="coordinput" name="hashtag" type="text" id="hashtag" placeholder="# + max. 10 letters" pattern="#\w+" maxlength="11">
                     <input type="submit" value="Submit">
                 </fieldset>
             </form>

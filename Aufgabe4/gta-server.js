@@ -60,13 +60,7 @@ var Geotags = (function () {
     // private
     var tags = [];
     function getTags(searchstring) {
-        matchlist = [];
-        for (const tag in tags) {
-            if (tag.name.includes(searchstring) || tag.hashtag.includes(searchstring)) {
-                matchlist.push(tag);
-            }
-        }
-        return matchlist;
+        return tags.filter(tag => tag.name.includes(searchstring) || tag.hashtag.includes(searchstring));
     }
 
     // public
@@ -90,13 +84,14 @@ var Geotags = (function () {
             return tags;
         },
         searchTags: function (latitude, longitude, radius, searchterm) {
+            let searchlist;
             if (searchterm == null) {
                 searchlist = tags;
             } else {
                 searchlist = getTags(searchterm);
             }
-            matchlist = [];
-            tags.forEach(function (tag) {
+            let matchlist = [];
+            searchlist.forEach(function (tag) {
                 if (Math.sqrt(Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)) < radius) {
                     matchlist.push(tag);
                 }
@@ -126,10 +121,13 @@ app.get('/', function (req, res) {
 app.get('/geotags', function (req, res) {
     // TODO: test query things
     if (req.query.search) {
-        if (req.query.radius && req.query.latitude && req.query.longitude) {
+        console.log("SEARCH" + req.query.search);
+        if (typeof req.query.radius !== 'undefined' &&
+            typeof req.query.latitude !== 'undefined' &&
+            typeof req.query.longitude !== 'undefined') {
             res.json(Geotags.searchTags(req.query.latitude, req.query.longitude, req.query.radius, req.query.search));
         } else {
-            res.json(Geotags.getTags(req.query.search));
+            res.json(Geotags.searchTags(10, 10, 100000, req.query.search));
         }
     } else {
         res.json(Geotags.getAllTags());
@@ -178,7 +176,7 @@ app.delete('/geotags/:id', function (req, res) {
 
 app.post('/tagging', function (req, res) {
     var b = req.body;
-    newtag = new Geotag(b.latitude, b.longitude, b.name, b.hashtag);
+    let newtag = new Geotag(b.latitude, b.longitude, b.name, b.hashtag);
     Geotags.addTag(newtag);
     res.render('gta', {
         // taglist: Geotags.getAllTags()

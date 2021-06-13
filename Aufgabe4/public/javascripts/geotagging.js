@@ -71,7 +71,7 @@ function submitnewtag() {
 
   var tagrequest = new XMLHttpRequest();
   tagrequest.onreadystatechange = function () {
-    if (tagrequest.readystate === 4) {
+    if (tagrequest.readyState === 4) {
       addTag(newtag);
     } else {
       console.log("something went wrong. we have a team of highly trained apes working on the error");
@@ -88,23 +88,24 @@ function queryTags() {
   var searchterm = document.getElementById("searchterm").value;
   var searchrequest = new XMLHttpRequest();
   searchrequest.onreadystatechange = function () {
-    if (searchrequest.readystate === 4) {
+    if (searchrequest.readyState === 4) {
       taglist = JSON.parse(searchrequest.responseText);
       renderTags();
-    } else {
-      alert("error");
-      return;
     }
   }
 
+  var searchquery = "";
   if (searchterm) {
-    searchrequest.open("GET", "geotags?search=" + searchterm +
+    searchquery = "geotags?search=" + searchterm +
       "&latitude=" + document.getElementById("latitude").value +
-      "&longitude=" + document.getElementById("longitude").value, true);
+      "&longitude=" + document.getElementById("longitude").value;
   } else {
-    searchrequest.open("GET", "geotags", true);
+    searchquery = "geotags"
   }
+
+  searchrequest.open("GET", searchquery, true);
   searchrequest.setRequestHeader("Content-Type", "application/json");
+  searchrequest.send();
 }
 
 // Die echte API ist diese.

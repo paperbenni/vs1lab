@@ -74,9 +74,16 @@ var Geotags = (function () {
         addTag: function (tag) {
             console.log("added tag " + JSON.stringify(tag));
             tags.push(tag);
+            return tags.indexOf(tag);
+        },
+        addIndexTag: function (index, tag) {
+            tags[index] = tag;
         },
         removeTag: function (tag) {
             tags.splice(tags.indexOf(tag), 1);
+        },
+        removeTagByIndex: function (index) {
+            tags.splice(index, 1);
         },
         getTags: getTags,
         getAllTags: function () {
@@ -115,11 +122,46 @@ app.get('/', function (req, res) {
     });
 });
 
-app.post('/rest/tagging', function (req, res) {
-    console.log(req.body);
-    Geotags.addTag(req.body);
-    res.json({'message': "successfully added"});
+// tested
+app.get('/geotags', function (req, res) {
+    // TODO: test query things
+    if (req.query.search) {
+        if (req.query.radius && req.query.latitude && req.query.longitude) {
+            res.json(Geotags.searchTags(req.query.latitude, req.query.longitude, req.query.radius, req.query.search));
+        } else {
+            res.json(Geotags.getTags(req.query.search));
+        }
+    } else {
+        res.json(Geotags.getAllTags());
+    }
 });
+
+//tested
+app.get('/geotags/:id', function (req, res) {
+    res.json(Geotags.getAllTags()[parseInt(req.params.id)]);
+});
+
+// tested
+app.post('/geotags', function (req, res) {
+    console.log("name" + req.body.name);
+    let newindex = Geotags.addTag(req.body);
+    res.setHeader("Location", newindex);
+    // created
+    res.status(201);
+    res.json({ 'sucess': true });
+});
+
+// tested
+app.put('/geotags/:id', function (req, res) {
+    Geotags.addIndexTag(req.params.id, req.body);
+    res.json({ 'sucess': true });
+});
+
+// tested
+app.delete('/geotags/:id', function (req, res) {
+    Geotags.removeTagByIndex(req.params.id);
+    res.json({ 'sucess': true });
+})
 
 /**
  * Route mit Pfad '/tagging' für HTTP 'POST' Requests.

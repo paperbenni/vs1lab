@@ -8,6 +8,7 @@
  */
 console.log("The script is going to start...");
 var taglist = [];
+var displaytaglist = [];
 
 // Es folgen einige Deklarationen, die aber noch nicht ausgeführt werden ...
 
@@ -70,7 +71,7 @@ function submitnewtag() {
 
   var tagrequest = new XMLHttpRequest();
   tagrequest.onreadystatechange = function () {
-    if (xhr.readystate === 4) {
+    if (tagrequest.readystate === 4) {
       addTag(newtag);
     } else {
       console.log("something went wrong. we have a team of highly trained apes working on the error");
@@ -81,6 +82,28 @@ function submitnewtag() {
   tagrequest.setRequestHeader("Content-Type", "application/json");
   tagrequest.send(JSON.stringify(newtag));
 
+}
+
+// TODO: redo this with new rest api
+function queryTags() {
+  var searchterm = document.getElementById("searchterm").value;
+  var searchrequest = new XMLHttpRequest();
+  searchrequest.onreadystatechange = function () {
+    if (searchrequest.readystate === 4) {
+      console.log("successssss");
+      console.log(searchrequest.responseText);
+    } else {
+      return;
+    }
+  }
+
+  if (searchterm) {
+    searchrequest.open("GET", "rest/discovery?searchterm=" + searchterm, true);
+  } else {
+    searchrequest.open("GET", "rest/discovery", true);
+  }
+
+  searchrequest.setRequestHeader("Content-Type", "application/json");
 }
 
 // Die echte API ist diese.

@@ -81,7 +81,7 @@
    };
  
    // Hier API Key eintragen
-   var apiKey = "O9L22vQeXwe8jp7e4xqPuyL5Qm4XCGYh";
+   var apiKey = "UvGuxYMvkd1ywjGkIXlvD742g9grGJRi";
  
    /**
     * Funktion erzeugt eine URL, die auf die Karte verweist.

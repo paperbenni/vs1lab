@@ -58,13 +58,7 @@ function Geotag(latitude, longitude, tagname, hashtag) {
 var Geotags = (function () {
     var tags = [];
     function getTags(searchstring) {
-        matchlist = [];
-        for (const tag in tags) {
-            if (tag.name.includes(searchstring) || tag.hashtag.includes(searchstring)) {
-                matchlist.push(tag);
-            }
-        }
-        return matchlist;
+                return tags.filter(tag => tag.name.includes(searchstring) || tag.hashtag.includes(searchstring));
     }
 
     return {
@@ -86,7 +80,7 @@ var Geotags = (function () {
                 searchlist = getTags(searchterm);
             }
             matchlist = [];
-            tags.forEach(function (tag) {
+            searchlist.forEach(function (tag) {
                 if (Math.sqrt(Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)) < radius) {
                     matchlist.push(tag);
                 }
@@ -154,7 +148,7 @@ app.post('/discovery', function (req, res) {
     var b = req.body;
     var taglist = []
     if ('term' in b) {
-        taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.searchterm);
+        taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.term);
     } else {
         taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius);
     }

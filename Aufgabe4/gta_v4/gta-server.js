@@ -60,13 +60,7 @@ var Geotags = (function() {
     var tags = [];
 
     function getTags(searchstring) {
-        matchlist = [];
-        for (const tag in tags) {
-            if (tag.name.includes(searchstring) || tag.hashtag.includes(searchstring)) {
-                matchlist.push(tag);
-            }
-        }
-        return matchlist;
+        return tags.filter(tag => tag.name.includes(searchstring) || tag.hashtag.includes(searchstring));
     }
 
     return {
@@ -95,7 +89,7 @@ var Geotags = (function() {
                 searchlist = getTags(searchterm);
             }
             matchlist = [];
-            tags.forEach(function(tag) {
+            searchlist.forEach(function(tag) {
                 if (Math.sqrt(Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)) < radius) {
                     matchlist.push(tag);
                 }
@@ -185,8 +179,23 @@ app.post('/geotags', function(req, res) {
 
 });
 app.get('/geotags', function(req, res) {
-    var ret = Geotags.getAllTags();
-    res.json(ret);
+
+
+    if (req.query.search && req.query.radius && req.query.latitude && req.query.longitude) {
+        var search = req.query.search;
+        var radius = req.query.radius;
+        var lat = req.query.latitude;
+        var lon = req.query.longitude;
+
+        res.json(Geotags.searchTags(lat, lon, radius, search));
+
+    } else {
+        var ret = Geotags.getAllTags();
+        res.json(ret);
+    }
+
+
+
 
 });
 app.put('/geotags/:id', function(req, res) {

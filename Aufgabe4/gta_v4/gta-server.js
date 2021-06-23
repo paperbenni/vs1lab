@@ -23,6 +23,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(bodyParser.json())
 
 // Setze ejs als View Engine
 app.set('view engine', 'ejs');
@@ -55,8 +56,9 @@ function Geotag(latitude, longitude, tagname, hashtag) {
  * - Funktion zum Löschen eines Geo Tags.
  */
 
-var Geotags = (function () {
+var Geotags = (function() {
     var tags = [];
+
     function getTags(searchstring) {
         matchlist = [];
         for (const tag in tags) {
@@ -68,25 +70,32 @@ var Geotags = (function () {
     }
 
     return {
-        addTag: function (tag) {
+        addTag: function(tag) {
             console.log("added tag " + JSON.stringify(tag));
             tags.push(tag);
         },
-        removeTag: function (tag) {
+        addIndexTag: function(index, tag) {
+            console.log("replaced tag " + JSON.stringify(tag));
+            tags[index] = tag;
+        },
+        removeTag: function(tag) {
             tags.splice(tags.indexOf(tag), 1);
         },
+        removeTagbyID: function(id) {
+            tags.splice(id, 1);
+        },
         getTags: getTags,
-        getAllTags: function () {
+        getAllTags: function() {
             return tags;
         },
-        searchTags: function (latitude, longitude, radius, searchterm) {
+        searchTags: function(latitude, longitude, radius, searchterm) {
             if (searchterm == null) {
                 searchlist = tags;
             } else {
                 searchlist = getTags(searchterm);
             }
             matchlist = [];
-            tags.forEach(function (tag) {
+            tags.forEach(function(tag) {
                 if (Math.sqrt(Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)) < radius) {
                     matchlist.push(tag);
                 }
@@ -106,7 +115,7 @@ var Geotags = (function () {
  * Als Response wird das ejs-Template ohne Geo Tag Objekte gerendert.
  */
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     res.render('gta', {
         taglist: [],
     });
@@ -125,13 +134,13 @@ app.get('/', function (req, res) {
  * Die Objekte liegen in einem Standard Radius um die Koordinate (lat, lon).
  */
 
-app.post('/tagging', function (req, res) {
+app.post('/tagging', function(req, res) {
     var b = req.body;
     newtag = new Geotag(b.latitude, b.longitude, b.name, b.hashtag);
     Geotags.addTag(newtag);
     res.render('gta', {
         // taglist: Geotags.getAllTags()
-        taglist: Geotags.searchTags(b.latitude, b.longitude, searchradius), 
+        taglist: Geotags.searchTags(b.latitude, b.longitude, searchradius),
         latitude: b.latitude,
         longitude: b.longitude
     })
@@ -150,7 +159,7 @@ app.post('/tagging', function (req, res) {
  */
 
 
-app.post('/discovery', function (req, res) {
+app.post('/discovery', function(req, res) {
     var b = req.body;
     var taglist = []
     if ('term' in b) {
@@ -165,6 +174,38 @@ app.post('/discovery', function (req, res) {
     });
 });
 
+
+app.post('/geotags', function(req, res) {
+    var tag = req.body;
+    Geotags.addTag(tag);
+    res.status(201);
+    res.json({ status: "ok" });
+
+
+
+});
+app.get('/geotags', function(req, res) {
+    var ret = Geotags.getAllTags();
+    res.json(ret);
+
+});
+app.put('/geotags/:id', function(req, res) {
+    var id = req.params.id;
+    Geotags.addIndexTag(id, req.body);
+    res.status(200);
+    res.json({ status: "ok" });
+});
+app.get('/geotags/:id', function(req, res) {
+    var id = req.params.id;
+    var tag = Geotags.getAllTags()[id];
+    res.json(tag);
+
+});
+app.delete('/geotags/:id', function(req, res) {
+    var id = req.params.id;
+    Geotags.removeTagbyID(id);
+    res.json({ message: "deleted" });
+});
 
 /**
  * Setze Port und speichere in Express.

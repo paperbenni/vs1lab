@@ -13,6 +13,7 @@
  var logger = require('morgan');
  var bodyParser = require('body-parser');
  var express = require('express');
+const { json } = require('body-parser');
  
  var searchradius = 100;
  
@@ -23,7 +24,7 @@
  app.use(bodyParser.urlencoded({
      extended: false
  }));
- 
+ app.use(bodyParser.json);
  // Setze ejs als View Engine
  app.set('view engine', 'ejs');
  
@@ -58,13 +59,7 @@
  var Geotags = (function () {
      var tags = [];
      function getTags(searchstring) {
-         matchlist = [];
-         for (const tag in tags) {
-             if (tag.name.includes(searchstring) || tag.hashtag.includes(searchstring)) {
-                 matchlist.push(tag);
-             }
-         }
-         return matchlist;
+       return tags.filter(tag => tag.name.includes(searchstring) || tag.hashtag.includes(searchstring));
      }
  
      return {
@@ -90,7 +85,8 @@
                  searchlist = getTags(searchterm);
              }
              matchlist = [];
-             tags.forEach(function (tag) {
+             
+             searchlist.forEach(function (tag) {
                  if (Math.sqrt(Math.pow(tag.latitude - latitude, 2) + Math.pow(tag.longitude - longitude, 2)) < radius) {
                      matchlist.push(tag);
                  }
@@ -180,12 +176,25 @@
  app.get('/geotags',function(req,res){
      var ret = Geotag.getAllTags();
      res.json(ret);
+     var search = req.query;
+     if(req.query.search&&req.query.radius&&req.query.latitude&&req.query.longitude)
+     {
+        var search = req.query.search;
+        var radius = req.query.radius;
+        var lat = req.query.latitude;
+        var lon=req.query.longitude;
+
+        res=json(Geotags.searchTags(lat,lon,radius,search))
+     }
+     
  });
 
  
  app.put('/geotags/:id',function(req,res){
-     var ret = Geotag.getAllTags();
-     res.json(ret);
+     var id= req.params.id;
+     Geotag.addIndexTag(id,req.body);
+     res.status(200);
+     res.json({status:"ok"});
  });
 
  app.get('/geotags/:id',function(req,res)

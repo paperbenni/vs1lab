@@ -7,6 +7,7 @@
  * Das Konsolenfenster muss im Browser explizit geöffnet werden.
  */
  console.log("The script is going to start...");
+ var ajax = new XMLHttpRequest();
 
  // Es folgen einige Deklarationen, die aber noch nicht ausgeführt werden ...
  
@@ -28,9 +29,23 @@
      });
    },
  };
+
+// function Geotag(latitude,longitude,tagname,hashtag)
+// {
+//   this.latitude = latitude;
+//   this.longitude = longitude;
+//   this.name = tagname;
+//   this.hashtag=hashtag;
+// }
+
+//  function submitnewtag(onclick) {
+//   alert("Event " + onclick.type
+//   + " fired on element " + this.tagName);
+//   }
+//   headline2.addEventListener("click", eventHandler, true);
  
  // Die echte API ist diese.
- // Falls es damit Probleme gibt, kommentieren Sie die Zeile aus.
+ // Falls es damit Probleme gibt, kommentieren Sie die Zeile aus. 
  GEOLOCATIONAPI = navigator.geolocation;
  
  /**

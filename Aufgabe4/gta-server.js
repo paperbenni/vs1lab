@@ -47,6 +47,14 @@ function Geotag(latitude, longitude, tagname, hashtag) {
     this.hashtag = hashtag;
 }
 
+function searchQuery(lat, lon, radius, search, page) {
+    this.lat = lat;
+    this.long = lon;
+    this.radius = radius;
+    this.search = search;
+    this.page = page;
+}
+
 /**
  * Modul für 'In-Memory'-Speicherung von GeoTags mit folgenden Komponenten:
  * - Array als Speicher für Geo Tags.
@@ -83,9 +91,9 @@ var Geotags = (function () {
         getAllTags: function () {
             return tags;
         },
-        searchTags: function (latitude, longitude, radius, searchterm) {
+        searchTags: function (latitude, longitude, radius, searchterm, page) {
             let searchlist;
-            if (searchterm == null) {
+            if (searchterm == null || searchterm == ".*") {
                 searchlist = tags;
             } else {
                 searchlist = getTags(searchterm);
@@ -96,7 +104,15 @@ var Geotags = (function () {
                     matchlist.push(tag);
                 }
             });
-            return matchlist;
+            if (!page) {
+                return matchlist;
+            } else {
+                if (matchlist.length < 5) {
+                    return matchlist;
+                } else {
+                    return matchlist.slice(page * 5, page * 5 + 6);
+                }
+            }
         }
     }
 }());
@@ -117,20 +133,20 @@ app.get('/', function (req, res) {
     });
 });
 
+// search query constructor
 // tested
 app.get('/geotags', function (req, res) {
-    // TODO: test query things
     if (req.query.search) {
         console.log("SEARCH" + req.query.search);
         if (typeof req.query.radius !== 'undefined' &&
             typeof req.query.latitude !== 'undefined' &&
             typeof req.query.longitude !== 'undefined') {
-            res.json(Geotags.searchTags(req.query.latitude, req.query.longitude, req.query.radius, req.query.search));
+            res.json(Geotags.searchTags(req.query.latitude, req.query.longitude, req.query.radius, req.query.search, req.query.page));
         } else {
-            res.json(Geotags.searchTags(10, 10, 100000, req.query.search));
+            res.json(Geotags.searchTags(10, 10, 100000, req.query.search, req.query.page));
         }
     } else {
-        res.json(Geotags.getAllTags());
+        res.json(Geotags.searchTags(10, 10, 100000, "", req.query.page));
     }
 });
 
@@ -202,10 +218,18 @@ app.post('/tagging', function (req, res) {
 app.post('/discovery', function (req, res) {
     var b = req.body;
     var taglist = []
-    if ('term' in b) {
-        taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.searchterm);
+    if ('page' in b) {
+        if ('term' in b) {
+            taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.searchterm, parseInt(b.page));
+        } else {
+            taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, ".*", parseInt(b.page));
+        }
     } else {
-        taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius);
+        if ('term' in b) {
+            taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, b.searchterm);
+        } else {
+            taglist = Geotags.searchTags(b.latitude, b.longitude, searchradius, ".*");
+        }
     }
     res.render('gta', {
         taglist: taglist,

@@ -50,6 +50,7 @@
                     <input name="term" type="text" id="searchterm" placeholder="hska" required>
                     <input <% if (locals.latitude !== undefined) { %> value="<%= latitude %>" <% } %> name="latitude" type="hidden" id="latitude_h" name="latitude">
                     <input <% if (locals.longitude !== undefined) { %> value="<%= longitude %>" <% } %> name="longitude" type="hidden" id="longitude_h" name="longitude">
+                    <input name="page" type="number" id="page" placeholder="1">
                 </form>
                 <button onclick="queryTags()">Apply</button>
             </fieldset>

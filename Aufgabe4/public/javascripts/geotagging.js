@@ -100,6 +100,11 @@ function queryTags() {
     searchquery = "geotags?search=" + searchterm +
       "&latitude=" + document.getElementById("latitude").value +
       "&longitude=" + document.getElementById("longitude").value;
+
+    var pagevalue = document.getElementById("page").value;
+    if (pagevalue) {
+        searchquery = searchquery + "&page=" + pagevalue;
+    }
   } else {
     searchquery = "geotags"
   }

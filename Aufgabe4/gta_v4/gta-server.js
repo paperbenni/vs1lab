@@ -11,14 +11,14 @@
  var http = require('http');
  //var path = require('path');
  var logger = require('morgan');
- var bodyParser = require('body-parser');
+ var bodyParser = require('body-parser');   //externe objekte werden geladen (externe scripte)
  var express = require('express');
 const { json } = require('body-parser');
  
  var searchradius = 100;
  
  var app;
- app = express();
+ app = express();  //das ist dann der server 
  app.use(logger('dev'));
  
  app.use(bodyParser.urlencoded({
@@ -26,7 +26,7 @@ const { json } = require('body-parser');
  }));
  app.use(bodyParser.json);
  // Setze ejs als View Engine
- app.set('view engine', 'ejs');
+ app.set('view engine', 'ejs');  //vorlage 
  
  /**
   * Konfiguriere den Pfad für statische Dateien.
@@ -40,7 +40,7 @@ const { json } = require('body-parser');
   * GeoTag Objekte sollen min. alle Felder des 'tag-form' Formulars aufnehmen.
   */
  
- function Geotag(latitude, longitude, tagname, hashtag) {
+ function Geotag(latitude, longitude, tagname, hashtag) {      //konstruk für geo obej
      this.latitude = latitude;
      this.longitude = longitude;
      this.name = tagname;
@@ -56,13 +56,13 @@ const { json } = require('body-parser');
   * - Funktion zum Löschen eines Geo Tags.
   */
  
- var Geotags = (function () {
-     var tags = [];
+ var Geotags = (function () {                      //server funktionen 
+     var tags = [];              //privat funktionen
      function getTags(searchstring) {
        return tags.filter(tag => tag.name.includes(searchstring) || tag.hashtag.includes(searchstring));
      }
- 
-     return {
+ //geotagg.getTags(tag) dann wird funktion ausgeführt 
+     return {    //public 
          addTag: function (tag) {
              console.log("added tag " + JSON.stringify(tag));
              tags.push(tag);
@@ -167,9 +167,9 @@ const { json } = require('body-parser');
  
  app.post('/geotags',function(req,res)
  {
-     var tag = req.body;
-     Geotag.addTag(tag);
-     res.status(201);
+     var tag = req.body; //tag wird aus body raus gezogen 
+     Geotag.addTag(tag);  //hier übergeben 
+     res.status(201);          //antwort die der server zurück gibt 
      res.json({status:"ok"});
  });
 
@@ -185,6 +185,10 @@ const { json } = require('body-parser');
         var lon=req.query.longitude;
 
         res=json(Geotags.searchTags(lat,lon,radius,search))
+     }
+     else {
+         var ret = Geotags.getAllTags();
+         res.json(ret);
      }
      
  });

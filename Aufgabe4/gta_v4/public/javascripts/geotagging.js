@@ -8,6 +8,37 @@
  */
 console.log("The script is going to start...");
 
+
+
+// Kostruktor für Geotag Objekte.
+function Geotag(latitude, longitude, tagname, hashtag) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.name = tagname;
+    this.hashtag = hashtag;
+}
+
+
+//Event Listener für Taglist
+function ListenerTags() {
+    var lat = document.getElementsByTagName(latitude).value;
+    var lon = document.getElementsByTagName(longitude).value;
+    var name =document.getElementsByTagName(name).value;
+    var name =document.getElementsByTagName(hashtag).value;
+
+    var tag = new Geotag(lat,lon,name,hash)
+
+
+    messager= new XMLHttpRequest();
+    messager.open(GET,tag,true)
+
+
+}
+
+
+
+
+
 // Es folgen einige Deklarationen, die aber noch nicht ausgeführt werden ...
 
 // Hier wird die verwendete API für Geolocations gewählt

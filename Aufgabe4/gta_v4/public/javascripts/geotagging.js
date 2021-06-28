@@ -8,6 +8,10 @@
  */
 console.log("The script is going to start...");
 
+var tags = [];
+
+
+
 
 
 // Kostruktor für Geotag Objekte.
@@ -18,22 +22,67 @@ function Geotag(latitude, longitude, tagname, hashtag) {
     this.hashtag = hashtag;
 }
 
+//zeigt die Aktuelle Tagliste für den User an.
+function renderTags(){
+    var ul = document.getElementById("results");
+  ul.innerHTML = "";
+  tags.forEach(function (tag) {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(tag.name + " " + "(" + tag.latitude + "," + tag.longitude + ") " + tag.hashtag));
+    ul.appendChild(li);
+  });
+  gtaLocator.updateLocation();
+}
 
 //Event Listener für Taglist
 function ListenerTags() {
-    var lat = document.getElementsByTagName(latitude).value;
-    var lon = document.getElementsByTagName(longitude).value;
-    var name =document.getElementsByTagName(name).value;
-    var name =document.getElementsByTagName(hashtag).value;
+    document.getElementById("id1").style.color="green";
+    var lat = parseFloat(document.getElementById("latitude").value);
+    var lon = parseFloat(document.getElementById("longitude").value);
+    var name =document.getElementById("name").value;
+    var hashtag =document.getElementById("hashtag").value;
 
-    var tag = new Geotag(lat,lon,name,hash)
 
 
-    messager= new XMLHttpRequest();
-    messager.open(GET,tag,true)
+    var newTag = new Geotag(lat,lon,name,hashtag)
 
+    var messagerTags= new XMLHttpRequest();
+    messagerTags.onreadystatechange = function (){
+            if (messagerTags.readyState === 4){
+                tags.push(newTag);
+                renderTags();
+            }
+    };
+
+    messagerTags.open("POST","geotags",true);
+    messagerTags.setRequestHeader("Content-Type", "application/json");
+    messagerTags.send(JSON.stringify(newTag));
+    
+ 
+}
+
+// serach funktion 
+function ListenerSearch() {
+  document.getElementById("id1").style.color="red";
+  var lat = parseFloat(document.getElementById("latitude_h").value);
+  var lon = parseFloat(document.getElementById("longitude_h").value);
+  var searchterm =document.getElementById("searchterm").value;
+
+  var messengerSearch= new XMLHttpRequest();
+  messengerSearch.onreadystatechange = function (){
+          if (messengerSearch.readyState === 4){
+            tags = JSON.parse(messengerSearch.response);
+              renderTags();
+          }
+  };
+
+  messengerSearch.open("GET",`geotags?latitude=${lat}&longitude=${lon}&search=${searchterm}&radius=1000`,true);
+  messengerSearch.send();
+  
 
 }
+//`geotags?search=${name}`
+
 
 
 

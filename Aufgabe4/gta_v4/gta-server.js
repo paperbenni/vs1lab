@@ -80,7 +80,7 @@ var Geotags = (function() {
         },
         getTags: getTags,
         getAllTags: function() {
-            return tags;
+            return tags; 
         },
         searchTags: function(latitude, longitude, radius, searchterm) {
             if (searchterm == null) {
@@ -168,7 +168,7 @@ app.post('/discovery', function(req, res) {
     });
 });
 
-
+//REST API
 app.post('/geotags', function(req, res) {
     var tag = req.body;
     Geotags.addTag(tag);
